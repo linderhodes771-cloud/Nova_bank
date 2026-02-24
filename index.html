@@ -1,263 +1,341 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nova Bank</title>
+<title>Navo Digital Bank</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #e6f2ff;
-  margin: 0;
-  padding: 0;
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#e6f2ff;
 }
 
-/* Hamburger Menu */
-.menu {
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  left: 15px;
-  top: 15px;
+/* LOGIN */
+#loginScreen{
+  max-width:400px;
+  margin:100px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+}
+#loginScreen input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+#loginScreen button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#0066ff;
+  color:white;
+  font-size:16px;
 }
 
-/* Container */
-.container {
-  max-width: 420px;
-  margin: 50px auto 15px auto;
-  padding: 15px;
+/* MENU */
+.menu-btn{
+  font-size:26px;
+  position:absolute;
+  left:15px;
+  top:15px;
+  cursor:pointer;
+}
+.sidebar{
+  position:fixed;
+  left:-260px;
+  top:0;
+  width:250px;
+  height:100%;
+  background:#003366;
+  color:white;
+  padding:20px;
+  transition:0.3s;
+  z-index:2;
+}
+.sidebar h3{
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  padding-bottom:5px;
+}
+.sidebar p{
+  cursor:pointer;
+  margin:12px 0;
+}
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  top:0;
+  left:0;
+  z-index:1;
 }
 
-/* Cards */
-.card {
-  background: linear-gradient(135deg, #4da6ff, #1a75ff);
-  color: white;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  text-align: center;
+/* DASHBOARD */
+.container{
+  max-width:420px;
+  margin:60px auto;
+  padding:15px;
+}
+.card{
+  background:linear-gradient(135deg,#3399ff,#0066ff);
+  color:white;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+.balance{
+  font-size:28px;
+  font-weight:bold;
+}
+.button-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+.button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  color:white;
+}
+.send{background:#0066ff;}
+.deposit{background:green;}
+.withdraw{background:red;}
+
+.feature-card{
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:15px;
 }
 
-.card h3, .card p { margin: 0 0 5px 0; }
-.balance { font-size: 30px; font-weight: bold; margin-top: 10px; }
-
-.button-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
+/* Check scanning animation */
+.scan-line{
+  width:100%;
+  height:3px;
+  background:#00ccff;
+  position:absolute;
+  animation:scan 2s linear infinite;
 }
-
-.button {
-  flex: 1;
-  padding: 12px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
+@keyframes scan{
+  0%{top:0;}
+  100%{top:100%;}
 }
-
-.send { background: #1a75ff; color: white; }
-.deposit { background: green; color: white; }
-.withdraw { background: red; color: white; }
-
-/* Input fields */
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.image-container{
+  position:relative;
 }
-
-/* Transfer Card */
-.transfer-card, .feature-card, .transactions {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-}
-
-.transactions h4, .feature-card h4 { margin-top: 0; }
-
-/* Login Screen */
-#loginScreen {
-  max-width: 420px;
-  margin: 80px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 15px;
-}
-
-#loginScreen h2 { text-align: center; }
-#loginScreen input { margin-bottom: 10px; }
-#loginScreen button { width: 100%; padding: 12px; border-radius: 12px; background:#1a75ff; color:white; border:none; font-size:16px; cursor:pointer; }
 </style>
 </head>
 <body>
 
-<!-- Hamburger Menu -->
-<div class="menu" onclick="toggleMenu()">☰</div>
+<div class="menu-btn" onclick="openMenu()">☰</div>
 
-<!-- Login Screen -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="sidebar" id="sidebar">
+  <h3>Main</h3>
+  <p onclick="closeMenu()">Dashboard</p>
+  <p onclick="closeMenu()">Transaction History</p>
+
+  <h3>Payments</h3>
+  <p onclick="toggleTransfer();closeMenu()">Send Money</p>
+  <p onclick="payBills();closeMenu()">Pay Bills</p>
+
+  <h3>Cards</h3>
+  <p onclick="toggleFreeze()">Freeze / Unfreeze Card</p>
+
+  <h3>Profile</h3>
+  <p>Account #: 1234567890</p>
+  <p onclick="logout()">Logout</p>
+</div>
+
+<!-- LOGIN -->
 <div id="loginScreen">
-  <h2>Nova Bank Login</h2>
-  <input type="email" id="loginEmail" placeholder="Gmail" required>
-  <input type="password" id="loginPassword" placeholder="Password" required>
+  <h2>Navo Digital Bank</h2>
+  <input type="email" id="email" placeholder="Gmail">
+  <input type="password" id="password" placeholder="Password">
   <button onclick="login()">Login</button>
 </div>
 
-<!-- Main Container -->
-<div id="mainApp" class="container" style="display:none;">
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+<div class="container">
 
-  <!-- Balance Card -->
   <div class="card">
-    <h3>Nova Bank</h3>
+    <h3>Navo Digital Bank</h3>
     <p>Scott Messmer</p>
     <p>Account #: 1234567890</p>
     <div class="balance">$<span id="balance">50000</span></div>
   </div>
 
-  <!-- Buttons Row -->
   <div class="button-row">
     <button class="button send" onclick="toggleTransfer()">Send</button>
     <button class="button deposit" onclick="deposit()">Deposit</button>
     <button class="button withdraw" onclick="withdraw()">Withdraw</button>
   </div>
 
-  <!-- Transfer Form Card -->
-  <div id="transferForm" class="transfer-card" style="display:none;">
-    <input type="text" id="receiverName" placeholder="Receiver Name">
-    <input type="text" id="bankName" placeholder="Bank Name">
-    <input type="number" id="accountNumber" placeholder="Account Number">
-    <input type="number" id="amount" placeholder="Amount">
-    <input type="password" id="pin" placeholder="Enter 4-digit PIN">
+  <!-- Transfer -->
+  <div id="transferBox" class="feature-card" style="display:none;">
+    <input type="text" id="receiver" placeholder="Receiver Name"><br><br>
+    <input type="number" id="amount" placeholder="Amount"><br><br>
+    <input type="password" id="pin" placeholder="Enter PIN"><br><br>
     <button class="button send" onclick="sendMoney()">Confirm Transfer</button>
   </div>
 
-  <!-- Feature Cards -->
+  <!-- Check Deposit -->
+  <div class="feature-card">
+    <h4>Check Deposit</h4>
+    <input type="file" id="checkImage" accept="image/*" capture="environment"><br><br>
+    <button class="button deposit" onclick="depositCheck()">Deposit Check</button>
+    <div id="scanArea"></div>
+  </div>
+
+  <!-- Crypto -->
   <div class="feature-card">
     <h4>Crypto Portfolio</h4>
     <p>Bitcoin: 0.25 BTC</p>
     <p>Ethereum: 1.2 ETH</p>
   </div>
 
-  <div class="feature-card">
-    <h4>Check Deposit</h4>
-    <button class="button deposit" onclick="depositCheck()">Deposit Check</button>
-  </div>
-
-  <div class="feature-card">
-    <h4>Pay Bills</h4>
-    <button class="button send" onclick="payBills()">Pay Bills</button>
-  </div>
-
+  <!-- Credit Card -->
   <div class="feature-card">
     <h4>Credit Card</h4>
     <p>Card #: 1234 5678 9012 3456</p>
-    <p>Limit: $10,000</p>
-    <p>Due: 02/26/2026</p>
+    <p>Status: <span id="cardStatus">Active</span></p>
   </div>
 
-  <!-- Transaction History Card -->
-  <div class="transactions">
-    <h4>Transactions</h4>
-    <ul id="transactionList"></ul>
+  <!-- Transactions -->
+  <div class="feature-card">
+    <h4>Transaction History</h4>
+    <ul id="history"></ul>
   </div>
 
 </div>
+</div>
 
 <script>
-let balance = 50000;
+let balance=50000;
+let frozen=false;
 
-function updateBalance() {
-  document.getElementById("balance").innerText = balance;
+function login(){
+  if(!email.value||!password.value){alert("Enter login details");return;}
+  loginScreen.style.display="none";
+  app.style.display="block";
 }
 
-function toggleMenu() {
-  alert("Menu clicked! You can later add navigation links here.");
+function logout(){
+  app.style.display="none";
+  loginScreen.style.display="block";
 }
 
-// Login Function
-function login() {
-  let email = document.getElementById("loginEmail").value;
-  let pass = document.getElementById("loginPassword").value;
-  if(!email || !pass) { alert("Please fill all fields."); return; }
-  // For simulation, allow any Gmail + password
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("mainApp").style.display = "block";
-  alert("Welcome, " + email.split("@")[0] + "!");
+function updateBalance(){
+  document.getElementById("balance").innerText=balance;
 }
 
-// Transfer Functions
-function toggleTransfer() {
-  let form = document.getElementById("transferForm");
-  form.style.display = form.style.display === "none" ? "block" : "none";
+function deposit(){
+  let amt=prompt("Deposit amount:");
+  if(amt){balance+=parseInt(amt);updateBalance();}
 }
 
-function sendMoney() {
-  let receiver = document.getElementById("receiverName").value;
-  let bank = document.getElementById("bankName").value;
-  let account = document.getElementById("accountNumber").value;
-  let amount = parseInt(document.getElementById("amount").value);
-  let pin = document.getElementById("pin").value;
+function withdraw(){
+  let amt=prompt("Withdraw amount:");
+  if(amt && amt<=balance){balance-=parseInt(amt);updateBalance();}
+}
 
-  if (pin !== "0882") {
-    alert("Incorrect PIN. Transfer Failed.");
-    return;
+function toggleTransfer(){
+  transferBox.style.display=
+  transferBox.style.display==="none"?"block":"none";
+}
+
+function sendMoney(){
+  let amt=parseInt(amount.value);
+  if(pin.value!=="0882"){alert("Incorrect PIN");return;}
+  if(amt<=balance){
+    balance-=amt;
+    updateBalance();
+    let li=document.createElement("li");
+    li.innerText="Sent $"+amt+" to "+receiver.value;
+    history.appendChild(li);
+    alert("Transfer Complete! Payment will appear on the receiver end after the configuration payment paid.");
+  }
+}
+
+/* ADVANCED PAY BILLS */
+function payBills(){
+  let billType = prompt(
+  "Select Bill Type:\n\n"+
+  "1. Electricity\n"+
+  "2. Water\n"+
+  "3. Internet\n"+
+  "4. Credit Card\n"+
+  "5. Insurance\n\n"+
+  "Enter number (1-5):");
+
+  if(!billType) return;
+
+  let billName="";
+  switch(billType){
+    case "1": billName="Electricity Bill"; break;
+    case "2": billName="Water Bill"; break;
+    case "3": billName="Internet Bill"; break;
+    case "4": billName="Credit Card Bill"; break;
+    case "5": billName="Insurance Bill"; break;
+    default: alert("Invalid option"); return;
   }
 
-  if (!receiver || !bank || !account || !amount) {
-    alert("Please fill all fields.");
-    return;
-  }
+  let amt=prompt("Enter amount for "+billName+":");
+  if(!amt || amt<=0){alert("Invalid amount");return;}
+  if(amt>balance){alert("Insufficient funds");return;}
 
-  if (amount > balance) {
-    alert("Insufficient funds.");
-    return;
-  }
-
-  balance -= amount;
+  balance-=parseInt(amt);
   updateBalance();
 
-  let li = document.createElement("li");
-  li.innerText = "Sent $" + amount + " to " + receiver + " (" + bank + ")";
-  document.getElementById("transactionList").appendChild(li);
+  let li=document.createElement("li");
+  li.innerText="Paid $"+amt+" for "+billName;
+  history.appendChild(li);
 
-  alert("Transfer Complete! Payment will appear on the receiver end after the configured payment is processed.");
+  alert("Payment Successful! "+billName+" processed.");
 }
 
-// Deposit & Withdraw
-function deposit() {
-  let amount = prompt("Enter deposit amount:");
-  if (amount) {
-    balance += parseInt(amount);
+function depositCheck(){
+  let file=checkImage.files[0];
+  if(!file){alert("Take check photo first");return;}
+  let amt=prompt("Enter check amount:");
+  if(!amt)return;
+
+  let container=document.createElement("div");
+  container.className="image-container";
+  container.innerHTML="<img src='"+URL.createObjectURL(file)+"' width='100%'><div class='scan-line'></div>";
+  scanArea.innerHTML="";
+  scanArea.appendChild(container);
+
+  setTimeout(()=>{
+    balance+=parseInt(amt);
     updateBalance();
-    alert("Deposit Complete! Your balance has been updated.");
-  }
+    alert("Check scanned successfully! Funds added.");
+    scanArea.innerHTML="";
+  },2000);
 }
 
-function withdraw() {
-  let amount = prompt("Enter withdrawal amount:");
-  if (amount && amount <= balance) {
-    balance -= parseInt(amount);
-    updateBalance();
-    alert("Withdrawal Complete! Your balance has been updated.");
-  } else {
-    alert("Insufficient funds.");
-  }
+function toggleFreeze(){
+  frozen=!frozen;
+  cardStatus.innerText=frozen?"Frozen":"Active";
 }
 
-// Extra Features
-function depositCheck() {
-  let amount = prompt("Enter check amount to deposit:");
-  if(amount){ balance += parseInt(amount); updateBalance(); alert("Check deposited successfully!"); }
+function openMenu(){
+  sidebar.style.left="0";
+  overlay.style.display="block";
 }
-function payBills() {
-  let amount = prompt("Enter bill amount to pay:");
-  if(amount && amount <= balance){ balance -= parseInt(amount); updateBalance(); alert("Bill payment successful!"); }
-  else{ alert("Insufficient funds for bill payment."); }
+function closeMenu(){
+  sidebar.style.left="-260px";
+  overlay.style.display="none";
 }
 </script>
 
 </body>
-</html>>
+</html>
