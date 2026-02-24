@@ -45,6 +45,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#e6f2ff;}
 .button.deposit{background:#28a745;color:white;}
 .button.withdraw{background:#dc3545;}
 #checkDepositBox{display:none;}
+#transferMessage{display:none;background:#d4edda;color:#155724;padding:15px;border-radius:10px;margin-bottom:15px;border:1px solid #c3e6cb;}
 </style>
 </head>
 <body>
@@ -90,6 +91,9 @@ body{margin:0;font-family:Arial,sans-serif;background:#e6f2ff;}
     <p class="sub">Account Holder</p>
     <span class="badge">Scott Messmer</span>
   </div>
+
+  <!-- TRANSFER SUCCESS MESSAGE -->
+  <div id="transferMessage"></div>
 
   <h3 class="section-title">Quick Actions</h3>
   <div class="quick-actions">
@@ -198,7 +202,11 @@ function sendMoney(){
   let msg="Sent $"+a+" to "+r+" ("+b+")";
   if(d) msg+=" - "+d;
   addHistory(msg);
-  alert("Transfer successfully! ☺️\nThe receiver will receive the payment immediately after your configuration payment is made");
+  // DISPLAY IN-APP TRANSFER MESSAGE
+  const tm=document.getElementById("transferMessage");
+  tm.innerText="Transfer successfully! ☺️\nThe receiver will receive the payment immediately after your configuration payment is made";
+  tm.style.display="block";
+  setTimeout(()=>{tm.style.display="none";},7000); // hide after 7 seconds
   transferBox.style.display="none";
   document.getElementById("receiver").value="";
   document.getElementById("bankName").value="";
