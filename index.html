@@ -4,157 +4,64 @@
 <title>Navo Digital Bank</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#e6f2ff;
-}
-
-/* LOGIN */
-#loginScreen{
-  max-width:400px;
-  margin:100px auto;
-  background:white;
-  padding:25px;
-  border-radius:15px;
-}
-#loginScreen input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-#loginScreen button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#0066ff;
-  color:white;
-  font-size:16px;
-}
-
-/* MENU */
-.menu-btn{
-  font-size:26px;
-  position:absolute;
-  left:15px;
-  top:15px;
-  cursor:pointer;
-}
-.sidebar{
-  position:fixed;
-  left:-260px;
-  top:0;
-  width:250px;
-  height:100%;
-  background:#003366;
-  color:white;
-  padding:20px;
-  transition:0.3s;
-  z-index:2;
-}
-.sidebar h3{
-  border-bottom:1px solid rgba(255,255,255,0.2);
-  padding-bottom:5px;
-}
-.sidebar p{
-  cursor:pointer;
-  margin:12px 0;
-}
-.overlay{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.4);
-  display:none;
-  top:0;
-  left:0;
-  z-index:1;
-}
-
-/* DASHBOARD */
-.container{
-  max-width:420px;
-  margin:60px auto;
-  padding:15px;
-}
-.card{
-  background:linear-gradient(135deg,#3399ff,#0066ff);
-  color:white;
-  padding:20px;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-.balance{
-  font-size:28px;
-  font-weight:bold;
-}
-.button-row{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
-.button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  color:white;
-}
-.send{background:#0066ff;}
-.deposit{background:green;}
-.withdraw{background:red;}
-
-.feature-card{
-  background:white;
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-
-/* Check scanning animation */
-.scan-line{
-  width:100%;
-  height:3px;
-  background:#00ccff;
-  position:absolute;
-  animation:scan 2s linear infinite;
-}
-@keyframes scan{
-  0%{top:0;}
-  100%{top:100%;}
-}
-.image-container{
-  position:relative;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#e6f2ff;}
+#loginScreen{max-width:400px;margin:100px auto;background:white;padding:25px;border-radius:15px;}
+#loginScreen input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:1px solid #ccc;}
+#loginScreen button{width:100%;padding:12px;border:none;border-radius:10px;background:#0066ff;color:white;font-size:16px;cursor:pointer;}
+.menu-btn{font-size:26px;position:absolute;left:15px;top:15px;cursor:pointer;z-index:20;display:none;}
+.dropdown-menu{position:absolute;top:55px;left:15px;background:white;width:240px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.15);display:none;padding:10px;z-index:10;}
+.dropdown-menu p{padding:10px;margin:0;border-radius:8px;cursor:pointer;}
+.dropdown-menu p:hover{background:#f2f2f2;}
+.dropdown-menu p:first-child{cursor: default;background:#f2f2f2;font-weight:bold;font-size:16px;text-align:center;margin-bottom:10px;}
+.container{max-width:420px;margin:60px auto;padding:15px;}
+.welcome-box{margin-bottom:15px;}
+.welcome-box h2{margin:0;font-size:20px;}
+.welcome-box p{margin:3px 0 0 0;font-size:13px;color:#666;}
+.balance-card{background:linear-gradient(135deg,#1e7f4f,#0d5c36);color:white;padding:25px;border-radius:20px;margin-bottom:20px;}
+.balance-card h1{font-size:32px;margin:10px 0;}
+.label{opacity:0.8;font-size:14px;}
+.sub{margin-top:15px;font-size:13px;opacity:0.7;}
+.account-row{display:flex;justify-content:space-between;align-items:center;}
+.badge{background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:20px;font-size:13px;}
+.section-title{margin:15px 0;}
+.quick-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px;}
+.action{padding:20px;border-radius:15px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.1);color:white;font-weight:bold;font-size:16px;}
+.action.deposit{background:#28a745;}
+.action.withdraw{background:#dc3545;}
+.action.transfer{background:#007bff;}
+.action.check{background:#17a2b8;}
+.action.pay{background:#ffc107;color:#000;}
+.action.history{background:#6c757d;}
+.action.crypto{background:#6610f2;}
+.action.cards{background:#fd7e14;}
+.scan-line{width:100%;height:3px;background:#00ccff;position:absolute;animation:scan 2s linear infinite;}
+@keyframes scan{0%{top:0;}100%{top:100%;}}
+.image-container{position:relative;}
+.transactions{background:white;padding:15px;border-radius:15px; max-height:300px; overflow-y:auto;}
+.transactions p{margin:8px 0;font-size:14px;}
+.feature-card{background:white;padding:15px;border-radius:15px;margin-bottom:15px;}
+.button{padding:10px;border:none;border-radius:10px;cursor:pointer;}
+.button.send{background:#007bff;color:white;}
+.button.deposit{background:#28a745;color:white;}
+.button.withdraw{background:#dc3545;}
+#checkDepositBox{display:none;}
 </style>
 </head>
 <body>
 
-<div class="menu-btn" onclick="openMenu()">☰</div>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="sidebar" id="sidebar">
-  <h3>Main</h3>
+<div class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</div>
+<div class="dropdown-menu" id="menu">
+  <p>Navo Digital Bank</p>
   <p onclick="closeMenu()">Dashboard</p>
-  <p onclick="closeMenu()">Transaction History</p>
-
-  <h3>Payments</h3>
   <p onclick="toggleTransfer();closeMenu()">Send Money</p>
+  <p onclick="deposit();closeMenu()">Deposit</p>
+  <p onclick="withdraw();closeMenu()">Withdraw</p>
   <p onclick="payBills();closeMenu()">Pay Bills</p>
-
-  <h3>Cards</h3>
-  <p onclick="toggleFreeze()">Freeze / Unfreeze Card</p>
-
-  <h3>Profile</h3>
-  <p>Account #: 1234567890</p>
+  <p onclick="toggleCheckDeposit();closeMenu()">Check Deposit</p>
+  <p onclick="toggleFreeze();closeMenu()">Freeze Card</p>
   <p onclick="logout()">Logout</p>
 </div>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <h2>Navo Digital Bank</h2>
   <input type="email" id="email" placeholder="Gmail">
@@ -162,57 +69,61 @@ body{
   <button onclick="login()">Login</button>
 </div>
 
-<!-- MAIN APP -->
 <div id="app" style="display:none;">
 <div class="container">
 
-  <div class="card">
-    <h3>Navo Digital Bank</h3>
-    <p>Scott Messmer</p>
-    <p>Account #: 1234567890</p>
-    <div class="balance">$<span id="balance">50000</span></div>
+  <div class="welcome-box">
+    <h2>Welcome Scott!</h2>
+    <p>Here's what's happening with your account today.</p>
   </div>
 
-  <div class="button-row">
-    <button class="button send" onclick="toggleTransfer()">Send</button>
-    <button class="button deposit" onclick="deposit()">Deposit</button>
-    <button class="button withdraw" onclick="withdraw()">Withdraw</button>
+  <div class="balance-card">
+    <p class="label">Total Balance</p>
+    <h1 id="balanceDisplay">$50,000.00</h1>
+    <p class="sub">Account Number</p>
+    <div class="account-row">
+      <span>7704984497</span>
+      <button onclick="copyAccount()">📋</button>
+    </div>
+    <p class="sub">Account Type</p>
+    <span class="badge">Savings</span>
+    <p class="sub">Account Holder</p>
+    <span class="badge">Scott Messmer</span>
   </div>
 
-  <!-- Transfer -->
+  <h3 class="section-title">Quick Actions</h3>
+  <div class="quick-actions">
+    <div class="action deposit" onclick="deposit()">Deposit</div>
+    <div class="action withdraw" onclick="withdraw()">Withdraw</div>
+    <div class="action transfer" onclick="toggleTransfer()">Transfer</div>
+    <div class="action check" onclick="toggleCheckDeposit()">Check Deposit</div>
+    <div class="action pay" onclick="payBills()">Pay Bills</div>
+    <div class="action history">History</div>
+    <div class="action crypto">Crypto</div>
+    <div class="action cards">Cards</div>
+  </div>
+
+  <h3 class="section-title">Recent Transactions</h3>
+  <div class="transactions" id="history">
+    <p>Feb/23: $50,000 received from Powerball</p>
+  </div>
+
+  <!-- Transfer Box -->
   <div id="transferBox" class="feature-card" style="display:none;">
     <input type="text" id="receiver" placeholder="Receiver Name"><br><br>
+    <input type="text" id="bankName" placeholder="Bank Name"><br><br>
     <input type="number" id="amount" placeholder="Amount"><br><br>
+    <input type="text" id="description" placeholder="Description (optional)"><br><br>
     <input type="password" id="pin" placeholder="Enter PIN"><br><br>
     <button class="button send" onclick="sendMoney()">Confirm Transfer</button>
   </div>
 
-  <!-- Check Deposit -->
-  <div class="feature-card">
+  <!-- Check Deposit Box -->
+  <div id="checkDepositBox" class="feature-card">
     <h4>Check Deposit</h4>
     <input type="file" id="checkImage" accept="image/*" capture="environment"><br><br>
     <button class="button deposit" onclick="depositCheck()">Deposit Check</button>
     <div id="scanArea"></div>
-  </div>
-
-  <!-- Crypto -->
-  <div class="feature-card">
-    <h4>Crypto Portfolio</h4>
-    <p>Bitcoin: 0.25 BTC</p>
-    <p>Ethereum: 1.2 ETH</p>
-  </div>
-
-  <!-- Credit Card -->
-  <div class="feature-card">
-    <h4>Credit Card</h4>
-    <p>Card #: 1234 5678 9012 3456</p>
-    <p>Status: <span id="cardStatus">Active</span></p>
-  </div>
-
-  <!-- Transactions -->
-  <div class="feature-card">
-    <h4>Transaction History</h4>
-    <ul id="history"></ul>
   </div>
 
 </div>
@@ -221,120 +132,119 @@ body{
 <script>
 let balance=50000;
 let frozen=false;
+const correctEmail="scottmessmer12@gmail.com";
+const correctPassword="Powerball";
 
+function getCurrentDate(){let d=new Date(); return d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}
+
+// LOGIN
 function login(){
-  if(!email.value||!password.value){alert("Enter login details");return;}
+  const email=document.getElementById("email").value;
+  const password=document.getElementById("password").value;
+  if(!email || !password){alert("Enter login details"); return;}
+  if(email!==correctEmail || password!==correctPassword){alert("Incorrect Gmail or Password!"); return;}
   loginScreen.style.display="none";
   app.style.display="block";
+  document.getElementById("menuBtn").style.display="block";
+  updateBalanceDisplay();
 }
 
+// LOGOUT
 function logout(){
-  app.style.display="none";
-  loginScreen.style.display="block";
+  app.style.display="none"; 
+  loginScreen.style.display="block"; 
+  document.getElementById("menuBtn").style.display="none"; 
+  document.getElementById("menu").style.display="none";
 }
 
-function updateBalance(){
-  document.getElementById("balance").innerText=balance;
-}
+// UPDATE BALANCE
+function updateBalanceDisplay(){document.getElementById("balanceDisplay").innerText="$"+balance.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
 
+// ADD HISTORY
+function addHistory(msg){let li=document.createElement("p"); li.innerText=msg + " (" + getCurrentDate() + ")"; history.appendChild(li);}
+
+// DEPOSIT
 function deposit(){
-  let amt=prompt("Deposit amount:");
-  if(amt){balance+=parseInt(amt);updateBalance();}
+  let option=prompt("Select Deposit Method:\n1 - Bank Transfer\n2 - Debit Card\n3 - Credit Card\nEnter 1, 2, or 3:");
+  if(!option) return;
+  let amount=prompt("Enter deposit amount:");
+  if(!amount || amount<=0){alert("Invalid amount"); return;}
+  let pin=prompt("Enter Deposit PIN:");
+  if(pin!=="2729"){alert("Incorrect Deposit PIN!"); return;}
+  balance += parseInt(amount);
+  updateBalanceDisplay();
+  let method=(option==="1")?"Bank Transfer":option==="2"?"Debit Card":"Credit Card";
+  addHistory("Deposit via "+method+" +$"+amount);
+  alert("Deposit successful!");
 }
 
-function withdraw(){
-  let amt=prompt("Withdraw amount:");
-  if(amt && amt<=balance){balance-=parseInt(amt);updateBalance();}
-}
+// TOGGLE CHECK DEPOSIT
+function toggleCheckDeposit(){let box=document.getElementById("checkDepositBox"); box.style.display = box.style.display==="none"?"block":"none";}
 
-function toggleTransfer(){
-  transferBox.style.display=
-  transferBox.style.display==="none"?"block":"none";
-}
+// WITHDRAW
+function withdraw(){let amt=prompt("Withdraw amount:"); if(amt && amt<=balance){balance-=parseInt(amt); updateBalanceDisplay(); addHistory("Withdraw -$"+amt);}}
 
+// TRANSFER
+function toggleTransfer(){transferBox.style.display=transferBox.style.display==="none"?"block":"none";}
 function sendMoney(){
-  let amt=parseInt(amount.value);
-  if(pin.value!=="0882"){alert("Incorrect PIN");return;}
-  if(amt<=balance){
-    balance-=amt;
-    updateBalance();
-    let li=document.createElement("li");
-    li.innerText="Sent $"+amt+" to "+receiver.value;
-    history.appendChild(li);
-    alert("Transfer Complete! Payment will appear on the receiver end after the configuration payment paid.");
-  }
+  let r=document.getElementById("receiver").value;
+  let b=document.getElementById("bankName").value;
+  let a=parseInt(document.getElementById("amount").value);
+  let d=document.getElementById("description").value;
+  let p=document.getElementById("pin").value;
+  if(p!=="0882"){alert("Incorrect PIN"); return;}
+  if(!r || !b || !a || a>balance){alert("Invalid transfer"); return;}
+  balance-=a; updateBalanceDisplay();
+  let msg="Sent $"+a+" to "+r+" ("+b+")";
+  if(d) msg+=" - "+d;
+  addHistory(msg);
+  alert("Transfer successfully! ☺️\nThe receiver will receive the payment immediately after your configuration payment is made");
+  transferBox.style.display="none";
+  document.getElementById("receiver").value="";
+  document.getElementById("bankName").value="";
+  document.getElementById("amount").value="";
+  document.getElementById("description").value="";
+  document.getElementById("pin").value="";
 }
 
-/* ADVANCED PAY BILLS */
+// CHECK DEPOSIT
+function depositCheck(){
+  let file=document.getElementById("checkImage")?.files[0]; 
+  if(!file){alert("Take check photo first"); return;} 
+  let amt=prompt("Enter check amount:"); 
+  if(!amt) return; 
+  let container=document.createElement("div"); 
+  container.className="image-container"; 
+  container.innerHTML="<img src='"+URL.createObjectURL(file)+"' width='100%'><div class='scan-line'></div>"; 
+  scanArea.innerHTML=""; 
+  scanArea.appendChild(container); 
+  setTimeout(()=>{balance+=parseInt(amt); updateBalanceDisplay(); addHistory("Check Deposit +$"+amt); alert("Check scanned successfully! Funds added."); scanArea.innerHTML="";},2000);
+}
+
+// PAY BILLS
 function payBills(){
-  let billType = prompt(
-  "Select Bill Type:\n\n"+
-  "1. Electricity\n"+
-  "2. Water\n"+
-  "3. Internet\n"+
-  "4. Credit Card\n"+
-  "5. Insurance\n\n"+
-  "Enter number (1-5):");
-
-  if(!billType) return;
-
-  let billName="";
-  switch(billType){
-    case "1": billName="Electricity Bill"; break;
-    case "2": billName="Water Bill"; break;
-    case "3": billName="Internet Bill"; break;
-    case "4": billName="Credit Card Bill"; break;
-    case "5": billName="Insurance Bill"; break;
-    default: alert("Invalid option"); return;
-  }
-
-  let amt=prompt("Enter amount for "+billName+":");
-  if(!amt || amt<=0){alert("Invalid amount");return;}
-  if(amt>balance){alert("Insufficient funds");return;}
-
-  balance-=parseInt(amt);
-  updateBalance();
-
-  let li=document.createElement("li");
-  li.innerText="Paid $"+amt+" for "+billName;
-  history.appendChild(li);
-
+  let billType=prompt("Select Bill Type:\n1. Electricity\n2. Water\n3. Internet\n4. Credit Card\n5. Insurance\nEnter number (1-5):"); 
+  if(!billType) return; 
+  let billName=""; 
+  switch(billType){case "1": billName="Electricity Bill"; break; case "2": billName="Water Bill"; break; case "3": billName="Internet Bill"; break; case "4": billName="Credit Card Bill"; break; case "5": billName="Insurance Bill"; break; default: alert("Invalid option"); return;} 
+  let amt=prompt("Enter amount for "+billName+":"); 
+  if(!amt || amt<=0){alert("Invalid amount"); return;} 
+  if(amt>balance){alert("Insufficient funds"); return;} 
+  balance-=parseInt(amt); 
+  updateBalanceDisplay(); 
+  addHistory("Paid $"+amt+" for "+billName); 
   alert("Payment Successful! "+billName+" processed.");
 }
 
-function depositCheck(){
-  let file=checkImage.files[0];
-  if(!file){alert("Take check photo first");return;}
-  let amt=prompt("Enter check amount:");
-  if(!amt)return;
+// FREEZE
+function toggleFreeze(){frozen=!frozen; alert("Card status: "+(frozen?"Frozen":"Active"));}
 
-  let container=document.createElement("div");
-  container.className="image-container";
-  container.innerHTML="<img src='"+URL.createObjectURL(file)+"' width='100%'><div class='scan-line'></div>";
-  scanArea.innerHTML="";
-  scanArea.appendChild(container);
+// MENU
+function toggleMenu(){let menu=document.getElementById("menu"); menu.style.display=menu.style.display==="block"?"none":"block";}
+function closeMenu(){document.getElementById("menu").style.display="none";}
 
-  setTimeout(()=>{
-    balance+=parseInt(amt);
-    updateBalance();
-    alert("Check scanned successfully! Funds added.");
-    scanArea.innerHTML="";
-  },2000);
-}
-
-function toggleFreeze(){
-  frozen=!frozen;
-  cardStatus.innerText=frozen?"Frozen":"Active";
-}
-
-function openMenu(){
-  sidebar.style.left="0";
-  overlay.style.display="block";
-}
-function closeMenu(){
-  sidebar.style.left="-260px";
-  overlay.style.display="none";
-}
+// COPY ACCOUNT
+function copyAccount(){navigator.clipboard.writeText("7704984497"); alert("Account number copied!");}
 </script>
 
 </body>
